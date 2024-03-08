@@ -13,11 +13,17 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.1",
-	name: "Lemons",
+	num: "0.2",
+	name: "Lemons 2",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+    <h2>Farming Time</h2><br>
+	<h3>v0.2</h3><br>
+		- Added 1 layer.<br>
+		- Added 2 Upgrades. <br>
+		- Added 2 Buyables. <br>
+		- Added 2 Milestones. <br>
     <h2>The Beginning</h2><br>
 	<h3>v0.1</h3><br>
 		- Added 1 layer.<br>
@@ -48,6 +54,12 @@ function getPointGen() {
 	if (hasUpgrade('p', 12)) gain = gain.times(upgradeEffect('p', 12))
 	if (hasUpgrade('p', 14)) gain = gain.times(5)
 	if (hasUpgrade('p', 15)) gain = gain.times(upgradeEffect('p', 15))
+	if (hasUpgrade('p', 16)) gain = gain.times(2)
+    if (hasUpgrade('p', 17)) gain = gain.times(upgradeEffect('p', 17))
+    gain = gain.times(buyableEffect('l', 11))
+    gain = gain.pow(buyableEffect('l', 12))
+    //gain = gain.times(100) //for testing purposes
+    if (hasMilestone('l', 0)) gain = gain.times(3)
 	return gain
 }
 
