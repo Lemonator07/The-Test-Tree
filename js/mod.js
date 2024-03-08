@@ -7,20 +7,21 @@ let modInfo = {
 
 	discordName: "",
 	discordLink: "",
-	initialStartPoints: new Decimal (10), // Used for hard resets and new players
+	initialStartPoints: new Decimal (0), // Used for hard resets and new players
 	offlineLimit: 10,  // In hours
 }
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.0",
-	name: "Literally nothing",
+	num: "0.1",
+	name: "Lemons",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
-	<h3>v0.0</h3><br>
-		- Added things.<br>
-		- Added stuff.`
+    <h2>The Beginning</h2><br>
+	<h3>v0.1</h3><br>
+		- Added 1 layer.<br>
+		- Added 5 Upgrades.`
 
 let winText = `Congratulations! You have reached the end and beaten this game, but for now...`
 
@@ -43,6 +44,10 @@ function getPointGen() {
 		return new Decimal(0)
 
 	let gain = new Decimal(1)
+	if (hasUpgrade('p', 11)) gain = gain.times(2)
+	if (hasUpgrade('p', 12)) gain = gain.times(upgradeEffect('p', 12))
+	if (hasUpgrade('p', 14)) gain = gain.times(5)
+	if (hasUpgrade('p', 15)) gain = gain.times(upgradeEffect('p', 15))
 	return gain
 }
 
