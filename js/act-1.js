@@ -18,6 +18,7 @@ addLayer("p", {
     gainMult() {
         mult = new Decimal(1)
         if (hasUpgrade('p', 13)) mult = mult.times(upgradeEffect('p', 13))
+        //mult = new Decimal(1000000000)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -55,7 +56,8 @@ addLayer("p", {
     description: "Lemon Knowledge increases your Lemon gain",
     cost: new Decimal(3),
         effect() {
-            return player[this.layer].points.add(1).pow(0.5)
+            return player[this.layer].points.add(1).pow(0.25)
+
         },
         effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
                     },
@@ -97,6 +99,12 @@ addLayer("p", {
                     effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
                                 },
                     },
+ infoboxes: {
+        lore: {
+            title: "Lemon Knowledge",
+            body() { return "You decide to learn something for once. Maybe these lemons will come in handy" },
+        },
+    },
 })
 
 addLayer("l", {
@@ -123,6 +131,7 @@ addLayer("l", {
     gainMult() {
             mult = new Decimal(1)
             if (hasMilestone('l', 1)) mult = mult.times(player.l.points.add(1).log10().add(1).pow(-1.2))
+            if (hasUpgrade('m', 35)) mult = mult.times(2)
             return mult
         },
     gainExp() {                             // Returns the exponent to your gain of the prestige resource.
@@ -150,9 +159,16 @@ hotkeys: [
                     },
                     2: {
                             requirementDescription: "10 Lemon Farms",
-                            effectDescription: "start passively gaining 50% of knowledge per second",
+                            effectDescription: "start passively gaining 50% of knowledge per second. Also unlock a new layer",
                             done () {
                             return player[this.layer].points.gte(10)
+                            }
+                        },
+                    3: {
+                            requirementDescription: "15 Lemon Farms",
+                            effectDescription: "Boost Lemons And Money by 10",
+                            done () {
+                            return player[this.layer].points.gte(15)
                             }
                         },
              },
@@ -198,7 +214,12 @@ hotkeys: [
                 },
 
     },
-
+infoboxes: {
+        lore: {
+            title: "Lemon Farms",
+            body() { return "You begin to actually farm the lemons instead of picking them yourself. Should come in handy." },
+        },
+    },
 })
 addLayer("s", {
     startData() { return {                  // startData is a function that returns default data for a layer.
@@ -223,17 +244,55 @@ addLayer("s", {
 
     gainMult() {
             mult = new Decimal(1)
-            mult = mult.times(player.s.points.add(1))
+            if (hasMilestone('l', 1)) mult = mult.times(player.s.points.add(1).log10().add(1).pow(-.2))
             return mult
         },
     gainExp() {                             // Returns the exponent to your gain of the prestige resource.
         return new Decimal(1)
     },
+    branches: [['m',1]],
 hotkeys: [
         {key: "s", description: "S: Reset for Lemon Stands", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown() { return true },          // Returns a bool for if this layer's node should be visible in the tree.
+
  layerShown() { return hasMilestone('l', 2) || this.layer.points > 0 || hasUpgrade(this.layer, 21)},
+ milestones: {
+                     21: {
+                         requirementDescription: "1 Lemon Stand",
+                         effectDescription: "Money gain x3",
+                         done () {
+                         return player[this.layer].points.gte(1)
+                         }
+                     },
+                     22: {
+                         requirementDescription: "5 Lemon Stands",
+                         effectDescription: "Reduce Lemon Stand cost by Lemon Stands",
+                         done () {
+                         return player[this.layer].points.gte(5)
+                         }
+                     },
+                     23: {
+                             requirementDescription: "8 Lemon Stands",
+                             effectDescription: "Money gain x5",
+                             done () {
+                             return player[this.layer].points.gte(8)
+                             }
+                         },
+                    24: {
+                             requirementDescription: "10 Lemon Stands",
+                             effectDescription: "Keep Money Upgrades on Farm and Stand Resets",
+                             done () {
+                             return player[this.layer].points.gte(10)
+                             }
+                         },
+                    25: {
+                             requirementDescription: "15 Lemon Stands",
+                             effectDescription: "Boost Lemons And Money by 10",
+                             done () {
+                             return player[this.layer].points.gte(15)
+                             }
+                         },
+              },
     upgrades: {
        21: {
            title: "Better Business",
@@ -253,7 +312,12 @@ hotkeys: [
 
 
 
-
+infoboxes: {
+        lore: {
+            title: "Lemon Stands",
+            body() { return "You create some simple wooden stands to sell your lemons. Hopefully you can expand once you have some profit." },
+        },
+    },
 })
 
 addLayer("m", {
@@ -275,10 +339,11 @@ addLayer("m", {
     requires: new Decimal(100),              // The amount of the base needed to  gain 1 of the prestige currency.
                                             // Also the amount required to unlock the layer.
     type: "normal",                         // Determines the formula used for calculating prestige currency.
-    exponent: 0.25,                          // "normal" prestige gain is (currency^exponent).
+    exponent: 0.45,                          // "normal" prestige gain is (currency^exponent).
 
     passiveGeneration() {
-            let generation = new Decimal(1)
+            let generation = new Decimal(0)
+            if (hasMilestone('m', 10)) generation = generation.add(1)
             return generation
         },
     gainMult() {
@@ -288,25 +353,42 @@ addLayer("m", {
             if (hasUpgrade('m', 32)) mult = mult.times(2)
             if (hasUpgrade('m', 33)) mult = mult.times(upgradeEffect('m', 33))
             if (hasUpgrade('s', 22)) mult = mult.times(upgradeEffect('s', 22))
+            if (hasMilestone('s', 21)) mult = mult.times(3)
+            if (hasMilestone('s', 23)) mult = mult.times(5)
+            if (hasMilestone('l', 3)) mult = mult.times(10)
+            if (hasMilestone('s', 25)) mult = mult.times(10)
             return mult
         },
     gainExp() {                             // Returns the exponent to your gain of the prestige resource.
         return new Decimal(1)
     },
+doReset(resettingLayer) {
+                    let keep = [];
+                    if (hasMilestone("s", 24) && resettingLayer == "s")
+                        keep.push("upgrades")
+                    if (hasMilestone("s", 24) && resettingLayer == "l")
+                        keep.push("upgrades")
+                    if (hasMilestone("m", 11) && resettingLayer == "s")
+                        keep.push("milestones")
+                    if (hasMilestone("m", 11) && resettingLayer == "l")
+                        keep.push("milestones")
+                    if (layers[resettingLayer].row > this.row)
+                        layerDataReset("m", keep)
+                },
+
 hotkeys: [
         {key: "m", description: "M: Reset for Money", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-     doReset(resettingLayer) {
-            let keep = [];
-            if (hasMilestone("m", 11) && resettingLayer == "l")
-                keep.push("milestones")
-            if (hasMilestone("m", 11) && resettingLayer == "s")
-                keep.push("milestones")
-            if (layers[resettingLayer].row > this.row)
-                layerDataReset("m", keep)
-        },
+
      layerShown() { return player.s.points > 0 || hasMilestone(this.layer, 11)},
 milestones: {
+                    10: {
+                        requirementDescription: "$10",
+                        effectDescription: "Earn 100% of Money per second",
+                        done () {
+                        return player[this.layer].points.gte(10)
+                        }
+                    },
                     11: {
                         requirementDescription: "$100,000,000",
                         effectDescription: "Keep Lemon Knowledge Upgrades",
@@ -354,6 +436,11 @@ milestones: {
     },
 
 
-
-
+infoboxes: {
+        lore: {
+            title: "Money",
+            body() { return "Profit from the lemon stands you made, you can reinvest these profits to increase your lemon gain" },
+        },
+    },
 })
+

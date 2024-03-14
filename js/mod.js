@@ -3,7 +3,7 @@ let modInfo = {
 	id: "lemon tree",
 	author: "Lemonator",
 	pointsName: "Lemons",
-	modFiles: ["layers.js", "tree.js"],
+	modFiles: ["act-1.js", "tree.js", "side-layers.js"],
 
 	discordName: "",
 	discordLink: "",
@@ -13,11 +13,18 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.3",
-	name: "Lemons 3",
+	num: "0.4",
+	name: "Lemons V4",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+    <h2>Polishing</h2><br>
+	<h3>v0.4</h3><br>
+	    - Added Achievements<br>
+		- Balancing Changes<br>
+		- Fixed a lot of bugs<br>
+		- LORE!!!!!<br>
+		- Added 7 Milestones. <br>
     <h2>Capitalism</h2><br>
 	<h3>v0.3</h3><br>
 		- Added 2 layers.<br>
@@ -65,8 +72,10 @@ function getPointGen() {
     if (hasUpgrade('m', 34)) gain = gain.times(upgradeEffect('m', 34))
     gain = gain.times(buyableEffect('l', 11))
     gain = gain.pow(buyableEffect('l', 12))
-    //gain = gain.times(1000000) //for testing purposes
+    //gain = gain.times(1000000000000) //for testing purposes
     if (hasMilestone('l', 0)) gain = gain.times(3)
+    if (hasMilestone('l', 3)) gain = gain.times(10)
+    if (hasMilestone('s', 25)) gain = gain.times(10)
 	return gain
 }
 
@@ -76,11 +85,12 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
+ `<h4 style='margin-top:5px;opacity:0.5'> current endgame: reach 1e13 lemons</h4>`
 ]
 
 // Determines when the game "ends"
 function isEndgame() {
-	return player.points.gte(new Decimal("e280000000"))
+	return player.points.gte(new Decimal("1e13"))
 }
 
 
