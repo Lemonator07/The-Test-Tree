@@ -27,6 +27,7 @@ addLayer("p", {
      passiveGeneration() {
             let generation = new Decimal(0)
             if (hasMilestone('l', 2)) generation = generation.add(.5)
+            if (hasMilestone('b', 51)) generation = generation.add(.5)
             return generation
         },
         doReset(resettingLayer) {
@@ -131,7 +132,8 @@ addLayer("l", {
     gainMult() {
             mult = new Decimal(1)
             if (hasMilestone('l', 1)) mult = mult.times(player.l.points.add(1).log10().add(1).pow(-1.2))
-            if (hasUpgrade('m', 35)) mult = mult.times(2)
+            if (hasUpgrade('m', 35)) mult = mult.times(.5)
+            if (hasUpgrade('t', 102)) mult = mult.times(.5)
             return mult
         },
     gainExp() {                             // Returns the exponent to your gain of the prestige resource.
@@ -245,17 +247,25 @@ addLayer("s", {
     gainMult() {
             mult = new Decimal(1)
             if (hasMilestone('l', 1)) mult = mult.times(player.s.points.add(1).log10().add(1).pow(-.2))
+            if (hasUpgrade('t', 103)) mult = mult.times(.5)
             return mult
         },
     gainExp() {                             // Returns the exponent to your gain of the prestige resource.
         return new Decimal(1)
     },
+        doReset(resettingLayer) {
+                    let keep = [];
+                    if (hasMilestone("b", 52) && resettingLayer == "b")
+                        keep.push("milestones")
+                    if (layers[resettingLayer].row > this.row)
+                        layerDataReset("s", keep)
+                },
     branches: [['m',1]],
 hotkeys: [
         {key: "s", description: "S: Reset for Lemon Stands", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
 
- layerShown() { return hasMilestone('l', 2) || this.layer.points > 0 || hasUpgrade(this.layer, 21)},
+ layerShown() { return hasMilestone('l', 2) || this.layer.points > 0 || hasUpgrade(this.layer, 21) || hasMilestone(this.layer, 21)},
  milestones: {
                      21: {
                          requirementDescription: "1 Lemon Stand",

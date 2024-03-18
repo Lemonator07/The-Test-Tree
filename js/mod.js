@@ -3,7 +3,7 @@ let modInfo = {
 	id: "lemon tree",
 	author: "Lemonator",
 	pointsName: "Lemons",
-	modFiles: ["act-1.js", "tree.js", "side-layers.js"],
+	modFiles: ["act-1.js", "tree.js", "side-layers.js", "Tier-layer.js", "act-2.js"],
 
 	discordName: "",
 	discordLink: "",
@@ -70,6 +70,9 @@ function getPointGen() {
     if (hasUpgrade('p', 17)) gain = gain.times(upgradeEffect('p', 17))
     if (hasUpgrade('m', 31)) gain = gain.times(2)
     if (hasUpgrade('m', 34)) gain = gain.times(upgradeEffect('m', 34))
+    if (hasUpgrade('b', 41)) gain = gain.times(upgradeEffect('b', 41))
+    if (hasUpgrade('b', 42)) gain = gain.times(5)
+    if (hasUpgrade('t', 101)) gain = gain.times(2)
     gain = gain.times(buyableEffect('l', 11))
     gain = gain.pow(buyableEffect('l', 12))
     //gain = gain.times(1000000000000) //for testing purposes
