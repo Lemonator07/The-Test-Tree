@@ -8,6 +8,21 @@ addLayer("p", {
 		total: new Decimal(0),
         best: new Decimal(0),
     }},
+    microtabs: {
+        stuff: {
+            "Upgrades": {
+                content: [
+                    ["blank", "16px"],
+                    ["row",[["upgrade", 11], ["upgrade", 12], ["upgrade", 13], ["upgrade", 14], ["upgrade", 15,]]],
+                    ["row",[["upgrade", 16], ["upgrade", 17]]],
+                    ["blank", "16px"],
+
+                ]
+            },
+            
+        },
+
+    },
     color: "#F5E902",
     requires: new Decimal(10), // Can be a function that takes requirement increases into account
     resource: "Lemon Knowledge", // Name of prestige currency
@@ -106,6 +121,14 @@ addLayer("p", {
             body() { return "You decide to learn something for once. Maybe these lemons will come in handy" },
         },
     },
+    tabFormat: [
+
+        "main-display",
+        "prestige-button",
+        "infoboxes",
+        "blank",
+        ["microtabs","stuff"],
+    ]
 })
 
 addLayer("l", {
@@ -115,7 +138,28 @@ addLayer("l", {
         total: new Decimal(0),
         best: new Decimal(0),
     }},
+    microtabs: {
+        stuff: {
+            "Milestones": {
+                content: [
+                    ["blank", "16px"],
+                    ["column",[["milestone", 0], ["milestone", 1], ["milestone", 2], ["milestone", 3], ["milestone", 4], ["milestone", 5]]],
+                    ["blank", "16px"],
 
+                ]
+            },
+            "Buyables": {
+                content: [
+                    ["blank", "16px"],
+                    ["row",[["buyable", 11], ["buyable", 12]]],
+                    ["blank", "16px"],
+
+                ]
+            },
+            
+        },
+
+    },
     color: "#318C0D",                       // The color for this layer, which affects many elements.
     resource: "Lemon Farms",            // The name of this layer's main prestige resource.
     symbol: "F",
@@ -139,6 +183,7 @@ addLayer("l", {
     gainExp() {                             // Returns the exponent to your gain of the prestige resource.
         return new Decimal(1)
     },
+    canBuyMax() { return hasMilestone("l", 4) },
 hotkeys: [
         {key: "f", description: "F: Reset for Lemon Farms", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
@@ -173,6 +218,25 @@ hotkeys: [
                             return player[this.layer].points.gte(15)
                             }
                         },
+                    4: {
+                            requirementDescription: "25 Lemon Farms",
+                            effectDescription: "You can buy-max lemon farms",
+                            done () {
+                            return player[this.layer].points.gte(25)
+                            },
+                            unlocked() { return (hasUpgrade('r', 61))},
+
+                        },
+                    5: {
+                            requirementDescription: "50 Lemon Farms",
+                            effectDescription: "x10 Lemons",
+                            done () {
+                            return player[this.layer].points.gte(50)
+                            },
+                            unlocked() { return (hasUpgrade('r', 61))},
+
+                        },
+                        
              },
     upgrades: {
         // Look in the upgrades docs to see what goes here!
@@ -222,6 +286,14 @@ infoboxes: {
             body() { return "You begin to actually farm the lemons instead of picking them yourself. Should come in handy." },
         },
     },
+    tabFormat: [
+
+        "main-display",
+        "prestige-button",
+        "infoboxes",
+        "blank",
+        ["microtabs","stuff"],
+    ]
 })
 addLayer("s", {
     startData() { return {                  // startData is a function that returns default data for a layer.
@@ -230,7 +302,38 @@ addLayer("s", {
         total: new Decimal(0),
         best: new Decimal(0),
     }},
+    microtabs: {
+        stuff: {
+            "Milestones": {
+                content: [
+                    ["blank", "16px"],
+                    ["column",[["milestone", 21], ["milestone", 22], ["milestone", 23], ["milestone", 24], ["milestone", 25]]],
+                    ["blank", "16px"],
 
+                ]
+            },
+            "Upgrades": {
+                content: [
+                    ["blank", "16px"],
+                    ["row",[["upgrade", 21], ["upgrade", 23]]],
+                    ["blank", "16px"],
+
+                ]
+            },
+            "Marketing": {
+                content: [
+                    ["blank", "16px"],
+                   
+                    ["blank", "16px"],
+
+                ],
+                unlocked() { return hasUpgrade('r', 63)}
+            },
+            
+            
+        },
+
+    },
     color: "#6B6B6B",                       // The color for this layer, which affects many elements.
     resource: "Lemon Stands",            // The name of this layer's main prestige resource.
     symbol: "S",
@@ -248,6 +351,7 @@ addLayer("s", {
             mult = new Decimal(1)
             if (hasMilestone('l', 1)) mult = mult.times(player.s.points.add(1).log10().add(1).pow(-.2))
             if (hasUpgrade('t', 103)) mult = mult.times(.5)
+            if (hasUpgrade('m', 36)) mult = mult.times(.333)
             return mult
         },
     gainExp() {                             // Returns the exponent to your gain of the prestige resource.
@@ -309,7 +413,7 @@ hotkeys: [
            description: "Double your Money gain.",
            cost: new Decimal(3),
                    },
-        22: {
+        23: {
            title: "Business practices",
            description: "Money is boosted by Lemon Stands again.",
            cost: new Decimal(5),
@@ -328,6 +432,14 @@ infoboxes: {
             body() { return "You create some simple wooden stands to sell your lemons. Hopefully you can expand once you have some profit." },
         },
     },
+    tabFormat: [
+
+        "main-display",
+        "prestige-button",
+        "infoboxes",
+        "blank",
+        ["microtabs","stuff"],
+    ]
 })
 
 addLayer("m", {
@@ -337,6 +449,29 @@ addLayer("m", {
         total: new Decimal(0),
         best: new Decimal(0),
     }},
+    microtabs: {
+        stuff: {
+            "Milestones": {
+                content: [
+                    ["blank", "16px"],
+                    ["column",[["milestone", 10], ["milestone", 11]]],
+                    ["blank", "16px"],
+
+                ]
+            },
+            "Upgrades": {
+                content: [
+                    ["blank", "16px"],
+                    ["row",[["upgrade", 31], ["upgrade", 32], ["upgrade", 33], ["upgrade", 34], ["upgrade", 35],]],
+                    ["row",[["upgrade", 36], ["upgrade", 37], ["upgrade", 38], ["upgrade", 39], ["upgrade", 40],]],
+                    ["blank", "16px"],
+
+                ]
+            },
+            
+        },
+
+    },
     position: 1,
     color: "#E6BF4B",                       // The color for this layer, which affects many elements.
     resource: "Money",            // The name of this layer's main prestige resource.
@@ -443,6 +578,46 @@ milestones: {
                   description: "Double your Lemon Farm gain.",
                   cost: new Decimal(1000000000),
         },
+        36: {
+            title: "Back on the grind...",
+            description: "Triple Lemon Stand Gain",
+            cost: new Decimal(1e17),
+  },
+  37: {
+    title: "..the cybergrind",
+    description: "Double your Research Gain",
+    cost: new Decimal(1e19),
+},
+38: {
+    title: "Me when I farm",
+    description: "Increase Lemon Gain based on Lemon Farms",
+    cost: new Decimal(1e20),
+    effect() {
+        return player.l.points.add(1).pow(0.15)
+    },
+    effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
+
+},
+39: {
+    title: "I'm already running out of ideas for these names",
+    description: "uhhhhhhhhhhh",
+    cost: new Decimal(1e21),
+    effect() {
+        return player.points.add(1).pow(0.03)
+    },
+    effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
+
+},
+40: {
+    title: "This one's a doozy",
+    description: "Increase Lemon Gain by Lemons",
+    cost: new Decimal(1e30),
+    effect() {
+        return player.points.add(1).pow(0.04)
+    },
+    effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
+
+},
     },
 
 
@@ -452,5 +627,13 @@ infoboxes: {
             body() { return "Profit from the lemon stands you made, you can reinvest these profits to increase your lemon gain" },
         },
     },
+    tabFormat: [
+
+        "main-display",
+        "prestige-button",
+        "infoboxes",
+        "blank",
+        ["microtabs","stuff"],
+    ]
 })
 

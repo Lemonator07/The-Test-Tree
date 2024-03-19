@@ -13,11 +13,19 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.4",
-	name: "Lemons V4",
+	num: "0.5",
+	name: "Act 2 Part 1",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+	<h2>Act 2 Part 1</h2><br>
+	<h3>v0.5</h3><br>
+	    - Added 3 layers<br>
+		- Added 4 Milestones<br>
+		- Yes I know they look wacky I'll fix them<br>
+		- Added 17 Upgrades<br>
+		- Made things look nice<br>
+		- Fixed more bugs<br>
     <h2>Polishing</h2><br>
 	<h3>v0.4</h3><br>
 	    - Added Achievements<br>
@@ -73,10 +81,14 @@ function getPointGen() {
     if (hasUpgrade('b', 41)) gain = gain.times(upgradeEffect('b', 41))
     if (hasUpgrade('b', 42)) gain = gain.times(5)
     if (hasUpgrade('t', 101)) gain = gain.times(2)
+	if (hasUpgrade('m', 38)) gain = gain.times(upgradeEffect('m', 38))
+	if (hasUpgrade('m', 39)) gain = gain.times(upgradeEffect('m', 39))
+	if (hasUpgrade('m', 40)) gain = gain.times(upgradeEffect('m', 40))
     gain = gain.times(buyableEffect('l', 11))
     gain = gain.pow(buyableEffect('l', 12))
     //gain = gain.times(1000000000000) //for testing purposes
     if (hasMilestone('l', 0)) gain = gain.times(3)
+	if (hasMilestone('l', 10)) gain = gain.times(10)
     if (hasMilestone('l', 3)) gain = gain.times(10)
     if (hasMilestone('s', 25)) gain = gain.times(10)
 	return gain
@@ -93,7 +105,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return player.points.gte(new Decimal("1e13"))
+	return player.points.gte(new Decimal("1e26"))
 }
 
 

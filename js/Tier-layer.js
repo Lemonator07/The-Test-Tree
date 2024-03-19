@@ -9,6 +9,8 @@ microtabs: {
                 content: [
                     ["blank", "16px"],
                     ["row",[["upgrade", 101], ["upgrade", 102], ["upgrade", 103]]],
+                    ["row", [["upgrade", 104], ["upgrade", 105]]],
+                    ["row", [["upgrade", 106]]],
                     ["blank", "16px"],
 
                 ]
@@ -63,6 +65,27 @@ microtabs: {
                   currencyDisplayName: "Lemons",
                   currencyInternalName: "points",
                           },
+        104: {
+                  title: "Next Level",
+                  description: "Triple your Lemon gain.",
+                  cost: new Decimal(1e30),
+                  currencyDisplayName: "Lemons",
+                  currencyInternalName: "points",
+                          },     
+        105: {
+                  title:  "Getting Stronger",
+                  description: "Triple Money Gain",
+                  cost: new Decimal(1e35),
+                  currencyDisplayName: "Lemons",
+                  currencyInternalName: "points",
+                          },      
+        106: {
+                  title: "This is convient",
+                  description: "Keep Lemon Knowledge Upgrades on ALL RESETS",
+                  cost: new Decimal(1e50),
+                  currencyDisplayName: "Lemons",
+                  currencyInternalName: "points",
+                          },                                                           
     },
 
 infoboxes: {
