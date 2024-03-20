@@ -105,6 +105,7 @@ addLayer("ach", {
             tooltip: "Reach 1 Building Space",
             style(){return {"border-radius": "10% / 10%", "width": "100px", "height": "100px", 'background-color': (hasAchievement('ach',this.id)?(hasAchievement('ach', 26))?'#FFDC3D':'#77BF5F':'#BF5F5F' )}},
             onComplete() {player['ach'].points = player['ach'].points.add(1) },
+            unlocked() { return hasAchievement('ach', 25)},
         },
         32: {
             name: "<h4 style='margin-top:5px'>Newer Era</h4>",
@@ -112,6 +113,7 @@ addLayer("ach", {
             tooltip: "Reach 5000 Building Space",
             style(){return {"border-radius": "10% / 10%", "width": "100px", "height": "100px", 'background-color': (hasAchievement('ach',this.id)?(hasAchievement('ach', 26))?'#FFDC3D':'#77BF5F':'#BF5F5F' )}},
             onComplete() {player['ach'].points = player['ach'].points.add(1) },
+            unlocked() { return hasAchievement('ach', 25)},
         },
 
     },

@@ -100,7 +100,7 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
- `<h4 style='margin-top:5px;opacity:0.5'> current endgame: reach 1e13 lemons</h4>`
+ `<h4 style='margin-top:5px;opacity:0.5'> current endgame: reach 1e26 lemons</h4>`
 ]
 
 // Determines when the game "ends"

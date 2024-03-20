@@ -141,13 +141,12 @@ addLayer("l", {
     microtabs: {
         stuff: {
             "Milestones": {
-                content: [
-                    ["blank", "16px"],
-                    ["column",[["milestone", 0], ["milestone", 1], ["milestone", 2], ["milestone", 3], ["milestone", 4], ["milestone", 5]]],
-                    ["blank", "16px"],
+                            content: [
+                                ["blank", "16px"],
+                                "milestones"
 
-                ]
-            },
+                            ]
+                        },
             "Buyables": {
                 content: [
                     ["blank", "16px"],
@@ -304,14 +303,13 @@ addLayer("s", {
     }},
     microtabs: {
         stuff: {
-            "Milestones": {
-                content: [
-                    ["blank", "16px"],
-                    ["column",[["milestone", 21], ["milestone", 22], ["milestone", 23], ["milestone", 24], ["milestone", 25]]],
-                    ["blank", "16px"],
+           "Milestones": {
+                           content: [
+                               ["blank", "16px"],
+                               "milestones"
 
-                ]
-            },
+                           ]
+                       },
             "Upgrades": {
                 content: [
                     ["blank", "16px"],
@@ -357,6 +355,7 @@ addLayer("s", {
     gainExp() {                             // Returns the exponent to your gain of the prestige resource.
         return new Decimal(1)
     },
+    canBuyMax() { return hasMilestone("b", 52) },
         doReset(resettingLayer) {
                     let keep = [];
                     if (hasMilestone("b", 52) && resettingLayer == "b")
@@ -452,13 +451,12 @@ addLayer("m", {
     microtabs: {
         stuff: {
             "Milestones": {
-                content: [
-                    ["blank", "16px"],
-                    ["column",[["milestone", 10], ["milestone", 11]]],
-                    ["blank", "16px"],
+                            content: [
+                                ["blank", "16px"],
+                                "milestones"
 
-                ]
-            },
+                            ]
+                        },
             "Upgrades": {
                 content: [
                     ["blank", "16px"],
@@ -497,7 +495,7 @@ addLayer("m", {
             if (hasUpgrade('s', 21)) mult = mult.times(2)
             if (hasUpgrade('m', 32)) mult = mult.times(2)
             if (hasUpgrade('m', 33)) mult = mult.times(upgradeEffect('m', 33))
-            if (hasUpgrade('s', 22)) mult = mult.times(upgradeEffect('s', 22))
+            if (hasUpgrade('s', 23)) mult = mult.times(upgradeEffect('s', 23))
             if (hasMilestone('s', 21)) mult = mult.times(3)
             if (hasMilestone('s', 23)) mult = mult.times(5)
             if (hasMilestone('l', 3)) mult = mult.times(10)

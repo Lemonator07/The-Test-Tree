@@ -67,7 +67,7 @@ addLayer("b", {
                         },
                         52: {
                             requirementDescription: "1000 Building Space",
-                            effectDescription: "keep lemon stand milestones on Space reset",
+                            effectDescription: "buy max lemon stands and keep milestones on reset",
                             done () {
                             return player[this.layer].points.gte(1000)
                             }
